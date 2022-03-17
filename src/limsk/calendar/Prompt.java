@@ -30,7 +30,6 @@ public class Prompt {
 	//변경 안되는 것을 final static으로 함
 	private final static String PROMPT_MONTH="CAL> ";  // 변경 없는거는 대문자로
 	private final static String PROMPT_YEAR = "YEAR> ";
-	private final static String PROMPT_WEEKDAY = "WEEKDAY>";
 	
 	public void runPrompt() {
 		Scanner scanner = new Scanner(System.in);
@@ -38,7 +37,6 @@ public class Prompt {
 		
 		int year = 2022;
 		int month = 2;
-		int weekday = 0;
 		
 		while(true) {
 			System.out.println("연도를 입력하세요. (exit : -1)");
@@ -58,13 +56,9 @@ public class Prompt {
 				continue;
 			}
 			
-			System.out.println("첫째 날의 요일을 입력하세요 (su, mo, tu, we, th, fr, sa).");
-			System.out.print(PROMPT_WEEKDAY);
-			String str_weekday = scanner.next();
-			weekday = parseDay(str_weekday);
 			//디버깅용 -- System.out.println(str_weekday +" , "+ weekday);
 			
-			cal.printCalendar(year, month, weekday);
+			cal.printCalendar(year, month);
 	
 		}
 		System.out.println("Bye~~");
