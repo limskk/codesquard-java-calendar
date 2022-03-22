@@ -1,5 +1,10 @@
 package limsk.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 /*
  * - 월을 입력하면 해당월의 달력을 출력한다.
  * - 달력의 모양은 1단계에서 작성한 모양으로 만든다.
@@ -13,6 +18,34 @@ public class CalendarVirtual {
 	
 	public static final int[] MAX_DAYS = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	public static final int[] LEAP_MAX_DAYS = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	
+	
+	private HashMap <Date, String>planMap; 
+	
+	public CalendarVirtual() {
+		planMap = new HashMap<Date, String>();
+		
+	}
+	
+	/* 
+	 * date ex : "2017-06-20"
+	 * plan
+	 * parseException
+	 * */
+	public void registerPlan(String strDate, String plan) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		//System.out.println(date);
+		planMap.put(date, plan);
+		
+		
+	}
+	
+	public String searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		String plan = planMap.get(date);
+		return plan;
+		}
+	
 	
 	public boolean isLeapYear(int year) {
 		if(year % 4 == 0 && (year % 100 !=0 || year % 400 ==0)) {
@@ -79,7 +112,7 @@ public class CalendarVirtual {
 		// 1970년 1월 1일은 목요일
 		int syear = 1970;
 
-		final int STANDARD_WEEKDAY = 3; // Thursday
+		final int STANDARD_WEEKDAY = 4; // Thursday
 		
 		int count = 0;
 		for(int i =syear; i<year; i++) {
@@ -92,7 +125,7 @@ public class CalendarVirtual {
 			count += delta;
 		}
 		
-		count += day; // count = count + day
+		count += day -1; 
 		
 		int weekday = (count +STANDARD_WEEKDAY) % 7;
 		//System.out.println(count);
@@ -100,9 +133,17 @@ public class CalendarVirtual {
 	}
 	
 	//simple test code here
-	/*
-	 * public static void main(String[] args) { CalendarVirtual c = new
-	 * CalendarVirtual(); System.out.println(c.getWeekDay(1970, 1, 1) == 3);
-	 * System.out.println(c.getWeekDay(1971, 1, 1) == 4); }
-	 */
+	
+//	 public static void main(String[] args) throws ParseException { 
+//	 CalendarVirtual c = new CalendarVirtual(); 
+//	 System.out.println(c.getWeekDay(1970, 1, 1) == 4);
+//	 System.out.println(c.getWeekDay(1971, 1, 1) == 5); 
+//	 
+//	 c.registerPlan("2022-03-22", "Let's eat beef" );
+//	 System.out.println(c.searchPlan("2022-03-22").equals("Let's eat beef")  );
+//	 
+//	 }
+	 
+	 
+	 
 }
