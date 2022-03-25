@@ -21,22 +21,25 @@ public class Prompt {
 	 * 일월화수목금토
 	 * */
 	public int parseDay(String week) {
-		if(week.equals("su")) {
+		switch(week) {
+		case "su": 
 			return 0;
-		}else if(week.equals("mo")){
+		case "mo" :
 			return 1;
-		} else if (week.equals("tu")) {
+		case "tu": 
 			return 2;
-		}else if (week.equals("we")) {
+		case "we" :
 			return 3;
-		}else if (week.equals("th")) {
+		case "th": 
 			return 4;
-		}else if (week.equals("fr")) {
+		case "fr" :
 			return 5;
-		}else if(week.equals("sa")) {
+		case "sa" :
 			return 6;
-		} 
-		return 0;
+		default :
+			return 0;
+		}
+		
 	}
 	
 	//변경 안되는 것을 final static으로 함
@@ -50,20 +53,27 @@ public class Prompt {
 		
 		Scanner scanner = new Scanner(System.in);
 		CalendarVirtual cal = new CalendarVirtual();
-
-		while(true) {
+		
+		boolean isLoop = true;
+		while(isLoop) {
 			System.out.println("명령 (1, 2, 3, h, q)");
 			System.out.print(PROMPT_MENU);
 			String cmd = scanner.next();
-			if(cmd.equals("1")) {
+			switch(cmd) {
+			case "1" :
 				cmdRegister(scanner, cal);
-			} else if (cmd.equals("2")) {
+				break;
+			case "2" :
 				cmdSearch(scanner, cal);
-			} else if (cmd.equals("3")) {
+				break;
+			case "3" :
 				cmdCal(scanner, cal);
-			} else if (cmd.equals("h")) {
+				break;
+			case "h" :
 				printMenu();
-			} else if(cmd.equals("q")) {
+				break;
+			case "q" :
+				isLoop = false;
 				break;
 			}
 	
