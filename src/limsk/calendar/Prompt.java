@@ -16,6 +16,7 @@ public class Prompt {
 		System.out.println("사용하려는 기능을  입력해주세요");
 	}
 	
+	
 	/*
 	 * week 요일명
 	 * 일월화수목금토

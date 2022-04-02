@@ -3,8 +3,13 @@ package limsk.calendar;
 
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 /*
  * - 월을 입력하면 해당월의 달력을 출력한다.
@@ -19,13 +24,34 @@ public class CalendarVirtual {
 	
 	public static final int[] MAX_DAYS = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	public static final int[] LEAP_MAX_DAYS = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	
-	
+	private static final String SAVE_FILE="calendar.date";
 	private HashMap <Date, Plan>planMap; 
 	
 	public CalendarVirtual() {
 		planMap = new HashMap<Date, Plan>();
+		//calendar을 초기화하는 부분에 불러오기 기능을 만들어 줌
+		File f = new File(SAVE_FILE);
+		if(!f.exists()) {
+			
+			return;
+		} else {
+			try {
+				Scanner s = new Scanner(f);
+				while(s.hasNext()) {
+					String line = s.nextLine();
+					String[] words = line.split(",");
+					String date = words[0];
+					String detail = words[1].replaceAll("\"", "");
+					Plan p = new Plan(date, detail);
+					planMap.put(p.getDate(),p);
+				}
+				s.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
 		
+		}
 	}
 	
 	/* 
@@ -37,6 +63,18 @@ public class CalendarVirtual {
 		
 		Plan p = new Plan(strDate, plan);
 		planMap.put(p.getDate(), p);
+		
+		//file 저장 
+		File f = new File(SAVE_FILE);
+		String item = p.saveString();
+		try {
+			FileWriter fw = new FileWriter(f, true);
+			fw.write(item);
+			fw.close();
+	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
